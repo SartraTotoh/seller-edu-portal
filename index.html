@@ -25,7 +25,7 @@
         }
     </script>
     <style>
-        /* 🌌 Liquid Abstract Space with Watermark Grid */
+        /* 🌌 พื้นหลังสไตล์ Liquid Space และลายน้ำแบบการศึกษา */
         body { 
             background-color: #090d16; 
             overflow-x: hidden;
@@ -37,7 +37,7 @@
             background-position: 0 0, 16px 16px;
         }
         
-        /* Educational Watermark Line Art Layer */
+        /* 🎓 ลายน้ำ Education Graphic ด้านหลัง */
         .edu-watermark {
             position: fixed;
             top: 10%;
@@ -49,7 +49,7 @@
             z-index: -1;
         }
         
-        /* Floating Soft Liquid Blobs */
+        /* 🔮 เอฟเฟกต์สี Liquid Glass Glow Behind */
         body::before, body::after {
             content: "";
             position: fixed;
@@ -85,7 +85,7 @@
             100% { transform: translate(30px, 15px) scale(0.95); }
         }
 
-        /* 🧊 Liquid Glassmorphic Styling */
+        /* 🧊 สไตล์กล่องกระจกเหลว (Liquid Glassmorphism) */
         .liquid-glass {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(25px);
@@ -101,7 +101,7 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        /* Card Interaction */
+        /* เอฟเฟกต์ตอบสนองการวางเมาส์ */
         .card-hover { 
             transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1); 
         }
@@ -157,10 +157,10 @@
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
                 </div>
-                <p class="text-xs text-slate-300" id="statusText">กำลังเชื่อมต่อฐานข้อมูล...</p>
+                <p class="text-xs text-slate-300" id="statusText">กำลังเชื่อมต่อข้อมูล Real-time...</p>
             </div>
             <div class="text-[10px] text-slate-400 bg-white/5 px-2.5 py-1 rounded-full border border-white/5 flex items-center gap-1.5">
-                <i class="fa-solid fa-graduation-cap text-shopee"></i> จัดการโครงสร้าง Layout สำหรับทีมการศึกษาสำเร็จ
+                <i class="fa-solid fa-graduation-cap text-shopee"></i> ซิงค์โครงสร้างข้อมูล Layout อัตโนมัติสำเร็จ
             </div>
         </div>
 
@@ -191,26 +191,68 @@
                 document.getElementById('statusText').className = "text-xs font-semibold text-emerald-400";
             } catch (err) {
                 console.error(err);
-                document.getElementById('statusText').innerText = "โหลดข้อมูลล้มเหลว กรุณารีเฟรชหน้าจอหรือเช็กอินเทอร์เน็ตอีกครั้ง";
+                document.getElementById('statusText').innerText = "โหลดข้อมูลล้มเหลว กรุณารีเฟรชหน้าจอหรือเช็กลิงก์ชีตหลัก";
                 document.getElementById('statusText').className = "text-xs font-semibold text-rose-400";
             }
         }
 
-        function parseCSV(csv) {
-            const lines = csv.split(/\r?\n/);
-            return lines.slice(1).map(line => {
-                if (!line.trim()) return null;
-                const matches = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
-                if (!matches) return null;
-                const cols = matches.map(c => c.replace(/^"|"$/g, '').trim());
-                return { category: cols[0], title: cols[1], url: cols[2], objective: cols[3], keywords: cols[4] || '' };
-            }).filter(item => item && item.title);
+        // 🛠️ ตื่นเต็มตาเขียนใหม่: ระบบแปลง CSV แบบ Character-by-Character ปลอดภัยจาก Comma และเว้นวรรค 100%
+        function parseCSV(text) {
+            let result = [];
+            let cols = [];
+            let current = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < text.length; i++) {
+                let char = text[i];
+                
+                if (char === '"') {
+                    if (inQuotes && text[i+1] === '"') {
+                        current += '"';
+                        i++;
+                    } else {
+                        inQuotes = !inQuotes;
+                    }
+                } else if (char === ',' && !inQuotes) {
+                    cols.push(current.trim());
+                    current = '';
+                } else if ((char === '\r' || char === '\n') && !inQuotes) {
+                    if (char === '\r' && text[i+1] === '\n') {
+                        i++;
+                    }
+                    cols.push(current.trim());
+                    if (cols.length >= 2 && (cols[0] || cols[1])) {
+                        result.push(cols);
+                    }
+                    cols = [];
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            if (current || cols.length > 0) {
+                cols.push(current.trim());
+                result.push(cols);
+            }
+            
+            return result.slice(1).map(cols => {
+                return {
+                    category: cols[0] || '',
+                    title: cols[1] || '',
+                    url: cols[2] || '',
+                    objective: cols[3] || '',
+                    keywords: cols[4] || ''
+                };
+            }).filter(item => item && item.title && item.url);
         }
 
         function generateCardsHTML(items) {
             return items.map(item => {
-                const isUrgent = item.title.toLowerCase().includes('urgent');
-                const badge = isUrgent ? '<span class="bg-red-500/10 text-red-400 text-[9px] font-bold px-2 py-0.5 rounded border border-red-500/20 animate-pulse">URGENT</span>' : '<i class="fa-solid fa-arrow-up-right-from-square text-slate-600 group-hover:text-shopee/70 text-[10px] transition-colors mt-0.5"></i>';
+                const titleStr = item.title ? item.title.toString() : '';
+                const isUrgent = titleStr.toLowerCase().includes('urgent');
+                const badge = isUrgent ? 
+                    '<span class="bg-red-500/10 text-red-400 text-[9px] font-bold px-2 py-0.5 rounded border border-red-500/20 animate-pulse">URGENT</span>' : 
+                    '<i class="fa-solid fa-arrow-up-right-from-square text-slate-600 group-hover:text-shopee/70 text-[10px] transition-colors mt-0.5"></i>';
                 
                 return `
                     <a href="${item.url}" target="_blank" class="card-hover block liquid-glass p-5 rounded-2xl border border-white/5 hover:border-shopee/40 group">
@@ -218,7 +260,7 @@
                             <h3 class="font-bold text-sm text-white group-hover:text-shopee transition-colors tracking-tight leading-snug">${item.title}</h3>
                             ${badge}
                         </div>
-                        <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed font-light">${item.objective}</p>
+                        <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed font-light">${item.objective || ''}</p>
                     </a>
                 `;
             }).join('');
@@ -228,6 +270,8 @@
             const topSection = document.getElementById('topCategorySection');
             const bottomGrid = document.getElementById('bottomCategoriesGrid');
             
+            if(!topSection || !bottomGrid) return;
+            
             topSection.innerHTML = '';
             bottomGrid.innerHTML = '';
 
@@ -236,7 +280,7 @@
             const channelItems = data.filter(item => item.category && item.category.trim().toLowerCase() === 'channel');
             const commsItems = data.filter(item => item.category && item.category.trim().toLowerCase().includes('comm'));
 
-            // Render TOP Region
+            // Render หมวดหมู่หลักตรงกลางด้านบน
             if (topItems.length > 0) {
                 topSection.innerHTML = `
                     <div class="flex flex-col gap-4">
@@ -251,7 +295,7 @@
                 `;
             }
 
-            // Render BOTTOM Region Columns (Training)
+            // คอลัมน์ที่ 1: Training
             if (trainingItems.length > 0) {
                 const col = document.createElement('div');
                 col.className = "flex flex-col gap-4";
@@ -265,7 +309,7 @@
                 bottomGrid.appendChild(col);
             }
 
-            // Render BOTTOM Region Columns (Channel)
+            // คอลัมน์ที่ 2: Channel
             if (channelItems.length > 0) {
                 const col = document.createElement('div');
                 col.className = "flex flex-col gap-4";
@@ -279,7 +323,7 @@
                 bottomGrid.appendChild(col);
             }
 
-            // Render BOTTOM Region Columns (Seller Comms)
+            // คอลัมน์ที่ 3: Seller Comms
             if (commsItems.length > 0) {
                 const col = document.createElement('div');
                 col.className = "flex flex-col gap-4";
@@ -294,14 +338,16 @@
             }
         }
 
+        // ระบบกล่องค้นหาข้อมูลแบบ Real-time ป้องกันค่าว่างแครช
         document.getElementById('searchBar').addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
-            const filtered = allLinks.filter(l => 
-                l.title.toLowerCase().includes(term) || 
-                l.category.toLowerCase().includes(term) || 
-                l.keywords.toLowerCase().includes(term) ||
-                l.objective.toLowerCase().includes(term)
-            );
+            const filtered = allLinks.filter(l => {
+                const titleMatch = l.title && l.title.toLowerCase().includes(term);
+                const catMatch = l.category && l.category.toLowerCase().includes(term);
+                const keyMatch = l.keywords && l.keywords.toLowerCase().includes(term);
+                const objMatch = l.objective && l.objective.toLowerCase().includes(term);
+                return titleMatch || catMatch || keyMatch || objMatch;
+            });
             renderLayout(filtered);
         });
 
