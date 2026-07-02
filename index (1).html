@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopee BD Infrastructure Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+Thai:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        shopee: '#EE4D2D',
+                        shopeeDark: '#D73211',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans Thai', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 🌌 Liquid Abstract Background */
+        body { 
+            background-color: #0b0f19; 
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* วงกลมของเหลวจำลองด้านหลัง (Liquid Blobs) */
+        body::before, body::after {
+            content: "";
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.15;
+            z-index: -1;
+            pointer-events: none;
+        }
+        body::before {
+            background: #EE4D2D;
+            top: -20%;
+            right: -10%;
+            animation: liquidMovement 18s infinite alternate ease-in-out;
+        }
+        body::after {
+            background: #8b5cf6;
+            bottom: -20%;
+            left: -10%;
+            animation: liquidMovement 22s infinite alternate-reverse ease-in-out;
+        }
+
+        @keyframes liquidMovement {
+            0% { transform: translate(0px, 0px) scale(1); border-radius: 50%; }
+            50% { transform: translate(40px, -60px) scale(1.1); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+            100% { transform: translate(-20px, 40px) scale(0.9); border-radius: 60% 40% 30% 70% / 50% 30% 70% 50%; }
+        }
+
+        /* 🧊 Liquid Glassmorphism Core */
+        .liquid-glass {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .liquid-glass-header {
+            background: rgba(11, 15, 25, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-b: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* 🌟 Interactive Hover Effect */
+        .card-hover { 
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); 
+        }
+        .card-hover:hover { 
+            transform: translateY(-6px); 
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(238, 77, 45, 0.4);
+            box-shadow: 0 12px 30px rgba(238, 77, 45, 0.15);
+        }
+
+        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        
+        /* Custom Scrollbar ให้เนียนไปกับเว็บ */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0b0f19; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #EE4D2D; }
+    </style>
+</head>
+<body class="font-sans antialiased text-slate-200">
+
+    <!-- Header (Glass Transparent) -->
+    <header class="liquid-glass-header sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-4">
+                <div class="w-11 h-11 flex-shrink-0 bg-white/10 p-2 rounded-xl border border-white/10 backdrop-blur-md">
+                    <!-- โลโก้ Shopee แบบขาว-ส้มโปร่งแสงเข้ากับธีมกระจก -->
+                    <svg viewBox="0 0 24 24" class="w-full h-full fill-[#EE4D2D]">
+                        <path d="M19 6h-2c0-2.76-2.24-5-5-5S7 3.24 7 6H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-7-3c1.66 0 3 1.34 3 3H9c0-1.66 1.34-3 3-3zm7 17H5V8h14v12z"/>
+                    </svg>
+                </div>
+                <div class="border-l border-white/20 pl-4">
+                    <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+                        Seller Edu <span class="text-shopee bg-shopee/10 px-2.5 py-0.5 rounded-lg text-sm font-semibold border border-shopee/20">Portal</span>
+                    </h1>
+                    <p class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mt-0.5">BD Infrastructure & Comms 2026</p>
+                </div>
+            </div>
+
+            <!-- Search Box Glassmorphism -->
+            <div class="relative w-full md:w-1/3">
+                <input type="text" id="searchBar" 
+                       placeholder="พิมพ์คีย์เวิร์ด หรือชื่อเครื่องมือเพื่อค้นหา..." 
+                       class="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-2xl focus:outline-none focus:border-shopee focus:ring-4 focus:ring-orange-500/10 transition-all text-white placeholder-slate-400 backdrop-blur-md">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-4 text-slate-400"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        
+        <!-- Status Indicator Card -->
+        <div class="mb-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 liquid-glass p-5 rounded-2xl">
+            <div class="flex items-center gap-3">
+                <div class="flex h-2.5 w-2.5 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-shopee opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-shopee"></span>
+                </div>
+                <p class="text-xs font-semibold text-slate-300 tracking-wide" id="statusText">กำลังสตรีมมิ่งข้อมูลจาก Google Sheet...</p>
+            </div>
+            <div class="text-[11px] text-slate-400 bg-white/5 px-3 py-1.5 rounded-full border border-white/5 flex items-center gap-1.5">
+                <i class="fa-solid fa-cloud-arrow-down text-shopee"></i> ดึงข้อมูลสดแบบเรียลไทม์ไม่ต้องอัปเดตโค้ด
+            </div>
+        </div>
+
+        <!-- Dynamic Grid -->
+        <div id="linksContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Loading Skeletons -->
+            <div class="animate-pulse liquid-glass p-8 rounded-3xl h-60"></div>
+            <div class="animate-pulse liquid-glass p-8 rounded-3xl h-60"></div>
+            <div class="animate-pulse liquid-glass p-8 rounded-3xl h-60"></div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-24 py-8 border-t border-white/5 bg-slate-950/40 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-slate-500 text-xs gap-4">
+            <p>© 2026 Shopee BD Infrastructure. Internal Directory Platform.</p>
+            <p class="text-slate-600 flex items-center gap-1"><i class="fa-solid fa-bolt text-shopee"></i> Liquid Glass Design Interface</p>
+        </div>
+    </footer>
+
+    <!-- Core Business Logic Framework -->
+    <script>
+        const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTgucJPWx_p1KDJhtBVhZryVy_xFU8FOEvFqZwx_VvtmwaW8oNPAPG7EdsVqti2rVOgH7sOcq5R1qOF/pub?gid=0&single=true&output=csv";
+        let allLinks = [];
+
+        async function loadData() {
+            try {
+                const response = await fetch(csvUrl);
+                const data = await response.text();
+                allLinks = parseCSV(data);
+                renderLinks(allLinks);
+                const statusText = document.getElementById('statusText');
+                statusText.innerText = "ระบบซิงค์ข้อมูลกับฐานข้อมูลหลักแล้ว";
+                statusText.className = "text-xs font-semibold text-emerald-400 tracking-wide";
+            } catch (err) {
+                console.error(err);
+                document.getElementById('statusText').innerText = "เกิดข้อผิดพลาดในการดึงไฟล์ CSV";
+                document.getElementById('statusText').className = "text-xs font-semibold text-rose-400 tracking-wide";
+            }
+        }
+
+        function parseCSV(csv) {
+            const lines = csv.split(/?
+/);
+            return lines.slice(1).map(line => {
+                const matches = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+                if (!matches) return null;
+                const cols = matches.map(c => c.replace(/^"|"$/g, '').trim());
+                return { category: cols[0], title: cols[1], url: cols[2], objective: cols[3], keywords: cols[4] };
+            }).filter(item => item && item.title);
+        }
+
+        function renderLinks(data) {
+            const container = document.getElementById('linksContainer');
+            container.innerHTML = '';
+
+            const groups = data.reduce((acc, obj) => {
+                const key = obj.category;
+                if (!acc[key]) acc[key] = [];
+                acc[key].push(obj);
+                return acc;
+            }, {});
+
+            for (const category in groups) {
+                const section = document.createElement('div');
+                section.className = "flex flex-col gap-5";
+                
+                let icon = 'fa-folder text-slate-400';
+                if(category.includes('Edu')) icon = 'fa-graduation-cap text-orange-400';
+                else if(category.includes('Training')) icon = 'fa-chalkboard-user text-blue-400';
+                else if(category.includes('Channel')) icon = 'fa-layer-group text-purple-400';
+                else if(category.includes('Comms')) icon = 'fa-paper-plane text-emerald-400';
+
+                section.innerHTML = `
+                    <div class="flex items-center gap-2.5 px-1">
+                        <i class="fa-solid ${icon} text-sm"></i>
+                        <h2 class="text-sm font-bold text-slate-300 uppercase tracking-wider">${category}</h2>
+                    </div>
+                    <div class="grid gap-4">
+                        ${groups[category].map(item => `
+                            <a href="${item.url}" target="_blank" class="card-hover liquid-glass block p-5 rounded-2xl border border-white/5 hover:border-shopee/40 group">
+                                <div class="flex justify-between items-start gap-3 mb-2">
+                                    <h3 class="font-bold text-sm text-white group-hover:text-shopee transition-colors tracking-tight leading-snug">${item.title}</h3>
+                                    ${item.title.toLowerCase().includes('urgent') ? 
+                                      '<span class="bg-red-500/10 text-red-400 text-[9px] font-bold px-2 py-0.5 rounded border border-red-500/20 animate-pulse">URGENT</span>' : 
+                                      '<i class="fa-solid fa-arrow-up-right-from-square text-slate-600 group-hover:text-shopee/70 text-[10px] transition-colors mt-0.5"></i>'}
+                                </div>
+                                <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed font-light">${item.objective}</p>
+                            </a>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(section);
+            }
+        }
+
+        document.getElementById('searchBar').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = allLinks.filter(l => 
+                l.title.toLowerCase().includes(term) || 
+                l.category.toLowerCase().includes(term) || 
+                l.keywords.toLowerCase().includes(term) ||
+                l.objective.toLowerCase().includes(term)
+            );
+            renderLinks(filtered);
+        });
+
+        loadData();
+    </script>
+</body>
+</html>
