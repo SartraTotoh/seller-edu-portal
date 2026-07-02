@@ -6,7 +6,7 @@
     <title>Shopee BD Infrastructure Portal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2 family=Inter:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -25,7 +25,7 @@
         }
     </script>
     <style>
-        /* 🌌 พื้นหลังสไตล์ Liquid Space และลายน้ำแบบการศึกษา */
+        /* 🌌 Liquid Space & Glassmorphism Theme */
         body { 
             background-color: #090d16; 
             overflow-x: hidden;
@@ -37,7 +37,6 @@
             background-position: 0 0, 16px 16px;
         }
         
-        /* 🎓 ลายน้ำ Education Graphic ด้านหลัง */
         .edu-watermark {
             position: fixed;
             top: 10%;
@@ -49,7 +48,6 @@
             z-index: -1;
         }
         
-        /* 🔮 เอฟเฟกต์สี Liquid Glass Glow Behind */
         body::before, body::after {
             content: "";
             position: fixed;
@@ -85,7 +83,6 @@
             100% { transform: translate(30px, 15px) scale(0.95); }
         }
 
-        /* 🧊 สไตล์กล่องกระจกเหลว (Liquid Glassmorphism) */
         .liquid-glass {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(25px);
@@ -101,7 +98,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        /* เอฟเฟกต์ตอบสนองการวางเมาส์ */
         .card-hover { 
             transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1); 
         }
@@ -113,7 +109,6 @@
         }
 
         .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #090d16; }
         ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.08); border-radius: 10px; }
@@ -157,10 +152,10 @@
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
                 </div>
-                <p class="text-xs text-slate-300" id="statusText">กำลังเชื่อมต่อข้อมูล Real-time...</p>
+                <p class="text-xs text-slate-300" id="statusText">กำลังเริ่มดึงข้อมูลจากฐานข้อมูลหลัก...</p>
             </div>
             <div class="text-[10px] text-slate-400 bg-white/5 px-2.5 py-1 rounded-full border border-white/5 flex items-center gap-1.5">
-                <i class="fa-solid fa-graduation-cap text-shopee"></i> ซิงค์โครงสร้างข้อมูล Layout อัตโนมัติสำเร็จ
+                <i class="fa-solid fa-graduation-cap text-shopee"></i> Layout Synchronizer Ready
             </div>
         </div>
 
@@ -173,69 +168,44 @@
     <footer class="mt-28 py-8 border-t border-white/5 bg-slate-950/40 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-slate-500 text-xs gap-4">
             <p>© 2026 Shopee BD Infrastructure & Comms Team. For Internal Use Only.</p>
-            <p class="text-slate-600 flex items-center gap-1.5"><i class="fa-solid fa-shapes text-shopee"></i> Liquid Glass Layout Enhanced</p>
+            <p class="text-slate-600 flex items-center gap-1.5"><i class="fa-solid fa-shapes text-shopee"></i> Liquid Glass Layout Stable</p>
         </div>
     </footer>
 
     <script>
-        const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTgucJPWx_p1KDJhtBVhZryVy_xFU8FOEvFqZwx_VvtmwaW8oNPAPG7EdsVqti2rVOgH7sOcq5R1qOF/pub?gid=0&single=true&output=csv";
+        // ใช้ Cache-Buster ป้องกันเบราว์เซอร์จำค่า Error เก่าของ Google Sheet
+        const baseCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTgucJPWx_p1KDJhtBVhZryVy_xFU8FOEvFqZwx_VvtmwaW8oNPAPG7EdsVqti2rVOgH7sOcq5R1qOF/pub?gid=0&single=true&output=csv";
+        const csvUrl = baseCsvUrl + "&t=" + new Date().getTime();
         let allLinks = [];
 
-        async function loadData() {
-            try {
-                const response = await fetch(csvUrl);
-                const data = await response.text();
-                allLinks = parseCSV(data);
-                renderLayout(allLinks);
-                document.getElementById('statusText').innerText = "ซิงค์ฐานข้อมูลหลักและจัดกลุ่มโครงสร้าง Layout เรียบร้อยแล้ว";
-                document.getElementById('statusText').className = "text-xs font-semibold text-emerald-400";
-            } catch (err) {
-                console.error(err);
-                document.getElementById('statusText').innerText = "โหลดข้อมูลล้มเหลว กรุณารีเฟรชหน้าจอหรือเช็กลิงก์ชีตหลัก";
-                document.getElementById('statusText').className = "text-xs font-semibold text-rose-400";
-            }
-        }
-
-        // 🛠️ ตื่นเต็มตาเขียนใหม่: ระบบแปลง CSV แบบ Character-by-Character ปลอดภัยจาก Comma และเว้นวรรค 100%
+        // ฟังก์ชันล้างอักษรและแปลงไฟล์ CSV เป็น Array วางระบบป้องกันช่องว่างและ Comma หลุดกรอบ
         function parseCSV(text) {
-            let result = [];
-            let cols = [];
-            let current = '';
+            let lines = [];
+            let row = [""];
             let inQuotes = false;
-            
+
             for (let i = 0; i < text.length; i++) {
-                let char = text[i];
-                
-                if (char === '"') {
-                    if (inQuotes && text[i+1] === '"') {
-                        current += '"';
-                        i++;
-                    } else {
-                        inQuotes = !inQuotes;
-                    }
-                } else if (char === ',' && !inQuotes) {
-                    cols.push(current.trim());
-                    current = '';
-                } else if ((char === '\r' || char === '\n') && !inQuotes) {
-                    if (char === '\r' && text[i+1] === '\n') {
-                        i++;
-                    }
-                    cols.push(current.trim());
-                    if (cols.length >= 2 && (cols[0] || cols[1])) {
-                        result.push(cols);
-                    }
-                    cols = [];
-                    current = '';
+                let c = text[i];
+                let next = text[i+1];
+                if (c === '"') {
+                    if (inQuotes && next === '"') { row[row.length - 1] += '"'; i++; }
+                    else { inQuotes = !inQuotes; }
+                } else if (c === ',' && !inQuotes) {
+                    row.push("");
+                } else if ((c === '\r' || c === '\n') && !inQuotes) {
+                    if (c === '\r' && next === '\n') { i++; }
+                    lines.push(row.map(cell => cell.trim()));
+                    row = [""];
                 } else {
-                    current += char;
+                    row[row.length - 1] += c;
                 }
             }
-            if (current || cols.length > 0) {
-                cols.push(current.trim());
-                result.push(cols);
+            if (row.length > 1 || row[0] !== "") {
+                lines.push(row.map(cell => cell.trim()));
             }
             
-            return result.slice(1).map(cols => {
+            // ข้ามบรรทัด Header แล้วแปลงข้อมูล ป้องกันค่าว่างแครช
+            return lines.slice(1).map(cols => {
                 return {
                     category: cols[0] || '',
                     title: cols[1] || '',
@@ -243,10 +213,11 @@
                     objective: cols[3] || '',
                     keywords: cols[4] || ''
                 };
-            }).filter(item => item && item.title && item.url);
+            }).filter(item => item && item.title);
         }
 
         function generateCardsHTML(items) {
+            if (!items || items.length === 0) return '';
             return items.map(item => {
                 const titleStr = item.title ? item.title.toString() : '';
                 const isUrgent = titleStr.toLowerCase().includes('urgent');
@@ -254,13 +225,19 @@
                     '<span class="bg-red-500/10 text-red-400 text-[9px] font-bold px-2 py-0.5 rounded border border-red-500/20 animate-pulse">URGENT</span>' : 
                     '<i class="fa-solid fa-arrow-up-right-from-square text-slate-600 group-hover:text-shopee/70 text-[10px] transition-colors mt-0.5"></i>';
                 
+                // ป้องกันลิงก์พังถ้าลืมใส่โปรโตคอล
+                let finalUrl = item.url || '#';
+                if (finalUrl !== '#' && !finalUrl.startsWith('http://') && !finalUrl.startsWith('https://')) {
+                    finalUrl = 'https://' + finalUrl;
+                }
+
                 return `
-                    <a href="${item.url}" target="_blank" class="card-hover block liquid-glass p-5 rounded-2xl border border-white/5 hover:border-shopee/40 group">
+                    <a href="${finalUrl}" target="_blank" class="card-hover block liquid-glass p-5 rounded-2xl border border-white/5 hover:border-shopee/40 group">
                         <div class="flex justify-between items-start gap-3 mb-2">
                             <h3 class="font-bold text-sm text-white group-hover:text-shopee transition-colors tracking-tight leading-snug">${item.title}</h3>
                             ${badge}
                         </div>
-                        <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed font-light">${item.objective || ''}</p>
+                        <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed font-light">${item.objective || '-'}</p>
                     </a>
                 `;
             }).join('');
@@ -270,17 +247,18 @@
             const topSection = document.getElementById('topCategorySection');
             const bottomGrid = document.getElementById('bottomCategoriesGrid');
             
-            if(!topSection || !bottomGrid) return;
+            if (!topSection || !bottomGrid) return;
             
             topSection.innerHTML = '';
             bottomGrid.innerHTML = '';
 
+            // คัดกรองกลุ่มด้วยตรวจสอบความกว้างตัวอักษรเพื่อลดบั๊กพิมพ์เว้นวรรคในชีต
             const topItems = data.filter(item => item.category && item.category.trim().toLowerCase() === 'seller edu');
             const trainingItems = data.filter(item => item.category && item.category.trim().toLowerCase() === 'training');
             const channelItems = data.filter(item => item.category && item.category.trim().toLowerCase() === 'channel');
             const commsItems = data.filter(item => item.category && item.category.trim().toLowerCase().includes('comm'));
 
-            // Render หมวดหมู่หลักตรงกลางด้านบน
+            // เกรด 1: Seller Edu บนสุดเด่นๆ
             if (topItems.length > 0) {
                 topSection.innerHTML = `
                     <div class="flex flex-col gap-4">
@@ -295,7 +273,7 @@
                 `;
             }
 
-            // คอลัมน์ที่ 1: Training
+            // คอลัมน์ด้านล่าง 1: Training
             if (trainingItems.length > 0) {
                 const col = document.createElement('div');
                 col.className = "flex flex-col gap-4";
@@ -309,7 +287,7 @@
                 bottomGrid.appendChild(col);
             }
 
-            // คอลัมน์ที่ 2: Channel
+            // คอลัมน์ด้านล่าง 2: Channel
             if (channelItems.length > 0) {
                 const col = document.createElement('div');
                 col.className = "flex flex-col gap-4";
@@ -323,7 +301,7 @@
                 bottomGrid.appendChild(col);
             }
 
-            // คอลัมน์ที่ 3: Seller Comms
+            // คอลัมน์ด้านล่าง 3: Seller Comms
             if (commsItems.length > 0) {
                 const col = document.createElement('div');
                 col.className = "flex flex-col gap-4";
@@ -338,20 +316,48 @@
             }
         }
 
-        // ระบบกล่องค้นหาข้อมูลแบบ Real-time ป้องกันค่าว่างแครช
-        document.getElementById('searchBar').addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            const filtered = allLinks.filter(l => {
-                const titleMatch = l.title && l.title.toLowerCase().includes(term);
-                const catMatch = l.category && l.category.toLowerCase().includes(term);
-                const keyMatch = l.keywords && l.keywords.toLowerCase().includes(term);
-                const objMatch = l.objective && l.objective.toLowerCase().includes(term);
-                return titleMatch || catMatch || keyMatch || objMatch;
-            });
-            renderLayout(filtered);
-        });
+        async function loadData() {
+            try {
+                const response = await fetch(csvUrl);
+                if (!response.ok) {
+                    throw new Error("HTTP Status " + response.status + " (ติดต่อ Google Sheets ไม่สำเร็จ)");
+                }
+                const data = await response.text();
+                allLinks = parseCSV(data);
+                
+                if (allLinks.length === 0) {
+                    throw new Error("แปลงข้อมูลสำเร็จ แต่ไม่พบแถวข้อมูลที่สามารถแสดงผลได้ (กรุณาเช็กคอลัมน์ในชีต)");
+                }
 
-        loadData();
+                renderLayout(allLinks);
+                document.getElementById('statusText').innerText = "ซิงค์ฐานข้อมูลหลักและจัดกลุ่มโครงสร้าง Layout เรียบร้อยแล้ว";
+                document.getElementById('statusText').className = "text-xs font-semibold text-emerald-400";
+            } catch (err) {
+                console.error(err);
+                // 🛠️ ระบบ Diagnostics ผูกข้อความ Error แท้จริงขึ้นหน้าจอเพื่อง่ายต่อการหาสาเหตุ
+                document.getElementById('statusText').innerText = "เกิดข้อผิดพลาด: " + err.message + " | แนะนำ: กด Ctrl+F5 หรือตรวจสอบการเผยแพร่ลิงก์ชีต";
+                document.getElementById('statusText').className = "text-xs font-semibold text-rose-400 animate-pulse";
+            }
+        }
+
+        // มัดรวม Event Listeners ทำงานเมื่อโหลดหน้าจอสมบูรณ์ ป้องกันปัญหาสคริปต์หา Element ไม่เจอ
+        document.addEventListener("DOMContentLoaded", () => {
+            const searchBar = document.getElementById('searchBar');
+            if (searchBar) {
+                searchBar.addEventListener('input', (e) => {
+                    const term = e.target.value.toLowerCase();
+                    const filtered = allLinks.filter(l => {
+                        const titleMatch = l.title && l.title.toLowerCase().includes(term);
+                        const catMatch = l.category && l.category.toLowerCase().includes(term);
+                        const keyMatch = l.keywords && l.keywords.toLowerCase().includes(term);
+                        const objMatch = l.objective && l.objective.toLowerCase().includes(term);
+                        return titleMatch || catMatch || keyMatch || objMatch;
+                    });
+                    renderLayout(filtered);
+                });
+            }
+            loadData();
+        });
     </script>
 </body>
 </html>
