@@ -25,7 +25,7 @@
         }
     </script>
     <style>
-        /* 🌌 Liquid Abstract Space with Watermark Grid */
+        /* 🌌 พื้นหลังสไตล์ Liquid Space และลายน้ำแบบการศึกษา */
         body { 
             background-color: #090d16; 
             overflow-x: hidden;
@@ -37,27 +37,27 @@
             background-position: 0 0, 16px 16px;
         }
         
-        /* Educational Watermark Line Art Layer */
+        /* 🎓 ลายน้ำลายเส้นกราฟิก Education ด้านหลัง */
         .edu-watermark {
             position: fixed;
-            top: 15%;
+            top: 10%;
             left: 5%;
             width: 90%;
-            height: 70%;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' opacity='0.025'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1'%3E%3Ccircle cx='10%25' cy='20%25' r='60'/%3E%3Crect x='80%25' y='15%25' width='120' height='80' rx='10' transform='rotate(15, 80%25, 15%25)'/%3E%3Ccircle cx='85%25' cy='65%25' r='100' stroke-dasharray='10,10'/%3E%3Cg transform='translate(100, 250) scale(1.5)'%3E%3Cpath d='M12 3L1 9l11 6 9-4.91V17h2V9L12 3z' stroke='%23ffffff'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            height: 80%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' opacity='0.025'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1'%3E%3Ccircle cx='15%25' cy='25%25' r='50'/%3E%3Crect x='75%25' y='20%25' width='100' height='70' rx='8' transform='rotate(15, 75%25, 20%25)'/%3E%3Ccircle cx='85%25' cy='70%25' r='90' stroke-dasharray='8,8'/%3E%3Cg transform='translate(120, 220) scale(1.4)'%3E%3Cpath d='M12 3L1 9l11 6 9-4.91V17h2V9L12 3z' stroke='%23ffffff'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             pointer-events: none;
             z-index: -1;
         }
         
-        /* Floating Soft Liquid Blobs */
+        /* 🔮 เอฟเฟกต์สีของเหลวขยับได้ (Liquid Glass Glow Behind) */
         body::before, body::after {
             content: "";
             position: fixed;
             width: 700px;
             height: 700px;
             border-radius: 50%;
-            filter: blur(160px);
-            opacity: 0.12;
+            filter: blur(150px);
+            opacity: 0.13;
             z-index: -2;
             pointer-events: none;
         }
@@ -76,16 +76,16 @@
 
         @keyframes liquidMoveTop {
             0% { transform: translate(0px, 0px) scale(1); border-radius: 50% 50% 30% 70% / 50% 60% 40% 50%; }
-            50% { transform: translate(60px, 30px) scale(1.05); border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%; }
-            100% { transform: translate(-30px, 50px) scale(0.95); border-radius: 60% 40% 40% 60% / 50% 50% 50% 50%; }
+            50% { transform: translate(50px, 25px) scale(1.05); border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%; }
+            100% { transform: translate(-25px, 40px) scale(0.95); border-radius: 60% 40% 40% 60% / 50% 50% 50% 50%; }
         }
         @keyframes liquidMoveBottom {
             0% { transform: translate(0px, 0px) scale(1); }
-            50% { transform: translate(-40px, -40px) scale(1.1); }
-            100% { transform: translate(40px, 20px) scale(0.95); }
+            50% { transform: translate(-30px, -30px) scale(1.1); }
+            100% { transform: translate(30px, 15px) scale(0.95); }
         }
 
-        /* 🧊 Liquid Glassmorphic Styling */
+        /* 🧊 สไตล์กล่องกระจกเหลว (Liquid Glassmorphism) */
         .liquid-glass {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(25px);
@@ -101,7 +101,7 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        /* Card Interaction */
+        /* เอฟเฟกต์ตอบสนองตอนเอาเมาส์ชี้การ์ด */
         .card-hover { 
             transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1); 
         }
@@ -124,7 +124,6 @@
 
     <div class="edu-watermark"></div>
 
-    <!-- Header -->
     <header class="liquid-glass-header sticky top-0 z-50 shadow-xl">
         <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-6">
             <div class="flex items-center gap-4">
@@ -141,7 +140,6 @@
                 </div>
             </div>
 
-            <!-- Search Bar -->
             <div class="relative w-full md:w-1/3">
                 <input type="text" id="searchBar" 
                        placeholder="ค้นหาเครื่องมือ, คู่มือการเรียนรู้, คีย์เวิร์ด..." 
@@ -151,27 +149,23 @@
         </div>
     </header>
 
-    <!-- App Container -->
     <main class="max-w-7xl mx-auto px-6 py-8">
         
-        <!-- Connection Banner -->
         <div class="mb-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 liquid-glass p-4 rounded-2xl">
             <div class="flex items-center gap-3">
                 <div class="flex h-2 w-2 relative">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-shopee opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-shopee"></span>
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
                 </div>
-                <p class="text-xs text-slate-300" id="statusText">กำลังเชื่อมต่อข้อมูล Real-time...</p>
+                <p class="text-xs text-slate-300" id="statusText">กำลังเชื่อมต่อฐานข้อมูล...</p>
             </div>
             <div class="text-[10px] text-slate-400 bg-white/5 px-2.5 py-1 rounded-full border border-white/5 flex items-center gap-1.5">
-                <i class="fa-solid fa-graduation-cap text-shopee"></i> ซิงค์โครงสร้างข้อมูล Layout อัตโนมัติ
+                <i class="fa-solid fa-graduation-cap text-shopee"></i> จัดการโครงสร้าง Layout สำหรับทีมการศึกษาสำเร็จ
             </div>
         </div>
 
-        <!-- 🚀 TOP REGION: Seller Edu Centered Box -->
         <div class="mb-12 max-w-4xl mx-auto" id="topCategorySection"></div>
 
-        <!-- 🚀 BOTTOM REGION: 3 Columns Grid (Training, Channel, Seller Comms) -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start" id="bottomCategoriesGrid"></div>
         
     </main>
@@ -179,7 +173,7 @@
     <footer class="mt-28 py-8 border-t border-white/5 bg-slate-950/40 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-slate-500 text-xs gap-4">
             <p>© 2026 Shopee BD Infrastructure & Comms Team. For Internal Use Only.</p>
-            <p class="text-slate-600 flex items-center gap-1.5"><i class="fa-solid fa-shapes text-shopee"></i> Liquid Glass Enhanced Layout</p>
+            <p class="text-slate-600 flex items-center gap-1.5"><i class="fa-solid fa-shapes text-shopee"></i> Liquid Glass Layout Enhanced</p>
         </div>
     </footer>
 
@@ -197,31 +191,33 @@
                 document.getElementById('statusText').className = "text-xs font-semibold text-emerald-400";
             } catch (err) {
                 console.error(err);
-                document.getElementById('statusText').innerText = "โหลดข้อมูลล้มเหลว กรุณารีเฟรชหน้าจอ";
+                document.getElementById('statusText').innerText = "โหลดข้อมูลล้มเหลว กรุณารีเฟรชหน้าจอหรือเช็กอินเทอร์เน็ตอีกครั้ง";
                 document.getElementById('statusText').className = "text-xs font-semibold text-rose-400";
             }
         }
 
+        // ซ่อมโค้ดลบเครื่องหมาย \\ ที่ผิดพลาดเดิมออก เพื่อให้อ่านบรรทัด CSV ได้สมบูรณ์แบบ
         function parseCSV(csv) {
             const lines = csv.split(/\r?\n/);
             return lines.slice(1).map(line => {
+                if (!line.trim()) return null;
                 const matches = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
                 if (!matches) return null;
                 const cols = matches.map(c => c.replace(/^"|"$/g, '').trim());
-                return { category: cols[0], title: cols[1], url: cols[2], objective: cols[3], keywords: cols[4] };
+                return { category: cols[0], title: cols[1], url: cols[2], objective: cols[3], keywords: cols[4] || '' };
             }).filter(item => item && item.title);
         }
 
         function generateCardsHTML(items) {
             return items.map(item => `
-                <a href="\${item.url}" target="_blank" class="card-hover block liquid-glass p-5 rounded-2xl border border-white/5 hover:border-shopee/40 group">
+                <a href="${item.url}" target="_blank" class="card-hover block liquid-glass p-5 rounded-2xl border border-white/5 hover:border-shopee/40 group">
                     <div class="flex justify-between items-start gap-3 mb-2">
-                        <h3 class="font-bold text-sm text-white group-hover:text-shopee transition-colors tracking-tight leading-snug">\${item.title}</h3>
+                        <h3 class="font-bold text-sm text-white group-hover:text-shopee transition-colors tracking-tight leading-snug">${item.title}</h3>
                         \${item.title.toLowerCase().includes('urgent') ? 
                           '<span class="bg-red-500/10 text-red-400 text-[9px] font-bold px-2 py-0.5 rounded border border-red-500/20 animate-pulse">URGENT</span>' : 
                           '<i class="fa-solid fa-arrow-up-right-from-square text-slate-600 group-hover:text-shopee/70 text-[10px] transition-colors mt-0.5"></i>'}
                     </div>
-                    <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed font-light">\${item.objective}</p>
+                    <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed font-light">${item.objective}</p>
                 </a>
             `).join('');
         }
@@ -233,13 +229,13 @@
             topSection.innerHTML = '';
             bottomGrid.innerHTML = '';
 
-            // Group items by checking actual characters
-            const topItems = data.filter(item => item.category.trim().toLowerCase() === 'seller edu');
-            const trainingItems = data.filter(item => item.category.trim().toLowerCase() === 'training');
-            const channelItems = data.filter(item => item.category.trim().toLowerCase() === 'channel');
-            const commsItems = data.filter(item => item.category.trim().toLowerCase().includes('comm'));
+            // ตรวจสอบตัวอักษร ตัดเว้นวรรคทิ้ง ป้องกันข้อผิดพลาดกรณีพิมพ์ใน Sheet ไม่เหมือนกัน
+            const topItems = data.filter(item => item.category && item.category.trim().toLowerCase() === 'seller edu');
+            const trainingItems = data.filter(item => item.category && item.category.trim().toLowerCase() === 'training');
+            const channelItems = data.filter(item => item.category && item.category.trim().toLowerCase() === 'channel');
+            const commsItems = data.filter(item => item.category && item.category.trim().toLowerCase().includes('comm'));
 
-            // Render TOP Region (Seller Edu)
+            // เรนเดอร์กล่องด้านบนเด่น ๆ ตรงกลางสำหรับ Seller Edu
             if (topItems.length > 0) {
                 topSection.innerHTML = `
                     <div class="flex flex-col gap-4">
@@ -248,13 +244,13 @@
                             <h2 class="text-sm font-bold text-slate-200 uppercase tracking-wider">Seller Edu</h2>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-                            \${generateCardsHTML(topItems)}
+                            ${generateCardsHTML(topItems)}
                         </div>
                     </div>
                 `;
             }
 
-            // Render BOTTOM Region Columns (Training)
+            // เรนเดอร์กล่องคอลัมน์ด้านล่าง: Training
             if (trainingItems.length > 0) {
                 const col = document.createElement('div');
                 col.className = "flex flex-col gap-4";
@@ -263,12 +259,12 @@
                         <i class="fa-solid fa-chalkboard-user text-blue-400 text-sm"></i>
                         <h2 class="text-sm font-bold text-slate-300 uppercase tracking-wider">Training</h2>
                     </div>
-                    <div class="grid gap-4 w-full">\${generateCardsHTML(trainingItems)}</div>
+                    <div class="grid gap-4 w-full">${generateCardsHTML(trainingItems)}</div>
                 `;
                 bottomGrid.appendChild(col);
             }
 
-            // Render BOTTOM Region Columns (Channel)
+            // เรนเดอร์กล่องคอลัมน์ด้านล่าง: Channel
             if (channelItems.length > 0) {
                 const col = document.createElement('div');
                 col.className = "flex flex-col gap-4";
@@ -277,12 +273,12 @@
                         <i class="fa-solid fa-compass text-purple-400 text-sm"></i>
                         <h2 class="text-sm font-bold text-slate-300 uppercase tracking-wider">Channel</h2>
                     </div>
-                    <div class="grid gap-4 w-full">\${generateCardsHTML(channelItems)}</div>
+                    <div class="grid gap-4 w-full">${generateCardsHTML(channelItems)}</div>
                 `;
                 bottomGrid.appendChild(col);
             }
 
-            // Render BOTTOM Region Columns (Seller Comms)
+            // เรนเดอร์กล่องคอลัมน์ด้านล่าง: Seller Comms
             if (commsItems.length > 0) {
                 const col = document.createElement('div');
                 col.className = "flex flex-col gap-4";
@@ -291,12 +287,13 @@
                         <i class="fa-solid fa-paper-plane text-emerald-400 text-sm"></i>
                         <h2 class="text-sm font-bold text-slate-300 uppercase tracking-wider">Seller Comms</h2>
                     </div>
-                    <div class="grid gap-4 w-full">\${generateCardsHTML(commsItems)}</div>
+                    <div class="grid gap-4 w-full">${generateCardsHTML(commsItems)}</div>
                 `;
                 bottomGrid.appendChild(col);
             }
         }
 
+        // ระบบตัวค้นหาข้อมูลแบบ Realtime
         document.getElementById('searchBar').addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
             const filtered = allLinks.filter(l => 
