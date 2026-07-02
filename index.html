@@ -25,7 +25,7 @@
         }
     </script>
     <style>
-        /* 🌌 พื้นหลังสไตล์ Liquid Space และลายน้ำแบบการศึกษา */
+        /* 🌌 Liquid Abstract Space with Watermark Grid */
         body { 
             background-color: #090d16; 
             overflow-x: hidden;
@@ -37,7 +37,7 @@
             background-position: 0 0, 16px 16px;
         }
         
-        /* 🎓 ลายน้ำลายเส้นกราฟิก Education ด้านหลัง */
+        /* Educational Watermark Line Art Layer */
         .edu-watermark {
             position: fixed;
             top: 10%;
@@ -49,7 +49,7 @@
             z-index: -1;
         }
         
-        /* 🔮 เอฟเฟกต์สีของเหลวขยับได้ (Liquid Glass Glow Behind) */
+        /* Floating Soft Liquid Blobs */
         body::before, body::after {
             content: "";
             position: fixed;
@@ -85,7 +85,7 @@
             100% { transform: translate(30px, 15px) scale(0.95); }
         }
 
-        /* 🧊 สไตล์กล่องกระจกเหลว (Liquid Glassmorphism) */
+        /* 🧊 Liquid Glassmorphic Styling */
         .liquid-glass {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(25px);
@@ -101,7 +101,7 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        /* เอฟเฟกต์ตอบสนองตอนเอาเมาส์ชี้การ์ด */
+        /* Card Interaction */
         .card-hover { 
             transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1); 
         }
@@ -196,7 +196,6 @@
             }
         }
 
-        // ซ่อมโค้ดลบเครื่องหมาย \\ ที่ผิดพลาดเดิมออก เพื่อให้อ่านบรรทัด CSV ได้สมบูรณ์แบบ
         function parseCSV(csv) {
             const lines = csv.split(/\r?\n/);
             return lines.slice(1).map(line => {
@@ -209,17 +208,20 @@
         }
 
         function generateCardsHTML(items) {
-            return items.map(item => `
-                <a href="${item.url}" target="_blank" class="card-hover block liquid-glass p-5 rounded-2xl border border-white/5 hover:border-shopee/40 group">
-                    <div class="flex justify-between items-start gap-3 mb-2">
-                        <h3 class="font-bold text-sm text-white group-hover:text-shopee transition-colors tracking-tight leading-snug">${item.title}</h3>
-                        \${item.title.toLowerCase().includes('urgent') ? 
-                          '<span class="bg-red-500/10 text-red-400 text-[9px] font-bold px-2 py-0.5 rounded border border-red-500/20 animate-pulse">URGENT</span>' : 
-                          '<i class="fa-solid fa-arrow-up-right-from-square text-slate-600 group-hover:text-shopee/70 text-[10px] transition-colors mt-0.5"></i>'}
-                    </div>
-                    <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed font-light">${item.objective}</p>
-                </a>
-            `).join('');
+            return items.map(item => {
+                const isUrgent = item.title.toLowerCase().includes('urgent');
+                const badge = isUrgent ? '<span class="bg-red-500/10 text-red-400 text-[9px] font-bold px-2 py-0.5 rounded border border-red-500/20 animate-pulse">URGENT</span>' : '<i class="fa-solid fa-arrow-up-right-from-square text-slate-600 group-hover:text-shopee/70 text-[10px] transition-colors mt-0.5"></i>';
+                
+                return `
+                    <a href="${item.url}" target="_blank" class="card-hover block liquid-glass p-5 rounded-2xl border border-white/5 hover:border-shopee/40 group">
+                        <div class="flex justify-between items-start gap-3 mb-2">
+                            <h3 class="font-bold text-sm text-white group-hover:text-shopee transition-colors tracking-tight leading-snug">${item.title}</h3>
+                            ${badge}
+                        </div>
+                        <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed font-light">${item.objective}</p>
+                    </a>
+                `;
+            }).join('');
         }
 
         function renderLayout(data) {
@@ -229,13 +231,12 @@
             topSection.innerHTML = '';
             bottomGrid.innerHTML = '';
 
-            // ตรวจสอบตัวอักษร ตัดเว้นวรรคทิ้ง ป้องกันข้อผิดพลาดกรณีพิมพ์ใน Sheet ไม่เหมือนกัน
             const topItems = data.filter(item => item.category && item.category.trim().toLowerCase() === 'seller edu');
             const trainingItems = data.filter(item => item.category && item.category.trim().toLowerCase() === 'training');
             const channelItems = data.filter(item => item.category && item.category.trim().toLowerCase() === 'channel');
             const commsItems = data.filter(item => item.category && item.category.trim().toLowerCase().includes('comm'));
 
-            // เรนเดอร์กล่องด้านบนเด่น ๆ ตรงกลางสำหรับ Seller Edu
+            // Render TOP Region
             if (topItems.length > 0) {
                 topSection.innerHTML = `
                     <div class="flex flex-col gap-4">
@@ -250,7 +251,7 @@
                 `;
             }
 
-            // เรนเดอร์กล่องคอลัมน์ด้านล่าง: Training
+            // Render BOTTOM Region Columns (Training)
             if (trainingItems.length > 0) {
                 const col = document.createElement('div');
                 col.className = "flex flex-col gap-4";
@@ -264,7 +265,7 @@
                 bottomGrid.appendChild(col);
             }
 
-            // เรนเดอร์กล่องคอลัมน์ด้านล่าง: Channel
+            // Render BOTTOM Region Columns (Channel)
             if (channelItems.length > 0) {
                 const col = document.createElement('div');
                 col.className = "flex flex-col gap-4";
@@ -278,7 +279,7 @@
                 bottomGrid.appendChild(col);
             }
 
-            // เรนเดอร์กล่องคอลัมน์ด้านล่าง: Seller Comms
+            // Render BOTTOM Region Columns (Seller Comms)
             if (commsItems.length > 0) {
                 const col = document.createElement('div');
                 col.className = "flex flex-col gap-4";
@@ -293,7 +294,6 @@
             }
         }
 
-        // ระบบตัวค้นหาข้อมูลแบบ Realtime
         document.getElementById('searchBar').addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
             const filtered = allLinks.filter(l => 
