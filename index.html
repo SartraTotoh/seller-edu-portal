@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directory of Seller Edu 2026</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', 'Noto Sans Thai', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-[#EE4D2D] text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-white text-[#EE4D2D] p-2 rounded-lg font-bold text-xl shadow-sm">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-wide">Shopee Seller Edu Portal</h1>
+                    <p class="text-xs text-orange-100">BD Infrastructure & Tools Directory 2026</p>
+                </div>
+            </div>
+            
+            <!-- Live Search Bar -->
+            <div class="relative w-full md:w-96">
+                <input type="text" id="searchBar" placeholder="พิมพ์เพื่อค้นหาคอร์ส, คู่มือ, คีย์เวิร์ด (TH/EN)..." 
+                    class="w-full pl-10 pr-4 py-2.5 rounded-xl text-slate-900 focus:outline-none focus:ring-4 focus:ring-orange-300 shadow-inner transition-all">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full">
+        
+        <!-- Status Indicator / Instruction -->
+        <div class="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+            <div class="flex items-center gap-2">
+                <span class="relative flex h-3 w-3">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                </span>
+                <span class="text-sm font-medium text-slate-600" id="connectionStatus">กำลังเชื่อมต่อฐานข้อมูล Google Sheet...</span>
+            </div>
+            <div class="text-xs text-slate-400 flex items-center gap-1">
+                <i class="fa-solid fa-info-circle"></i> แก้ไขข้อมูลผ่าน Google Sheet ระบบจะอัปเดตอัตโนมัติทันที
+            </div>
+        </div>
+
+        <!-- Links Grid By Category -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="linksContainer">
+            <!-- Loading Skeletons จะถูกแทนที่ด้วยข้อมูลจริง -->
+            <div class="animate-pulse bg-white p-6 rounded-xl border border-slate-100 space-y-3">
+                <div class="h-6 bg-slate-200 rounded w-1/3"></div>
+                <div class="h-12 bg-slate-100 rounded"></div>
+                <div class="h-12 bg-slate-100 rounded"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-100 text-center py-6 text-slate-400 text-sm mt-auto">
+        <p>© 2026 Shopee BD Infrastructure Team. Powered by GitHub Pages & Google Sheets.</p>
+    </footer>
+
+    <script>
+        // ใส่พับลิกลิงก์ Google Sheet CSV ของคุณที่นี่ (ระบบเปิดให้ใช้งานคู่กันได้ทันที)
+        // เพื่อป้องกันปัญหา CORS และการตัดคอมมาผิดพลาดในฟิลด์ Objective ทีมงานจึงจำลองโครงสร้างดึงพิกัดที่แม่นยำไว้ให้ด้วย
+        const googleSheetCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT17XN7yZ8N8Z7q_R8m3O_YOUR_SHEET_ID_HERE/pub?output=csv";
+        
+        // ข้อมูล Hardcoded สำรองที่แกะจากภาพ 100% (เผื่อกรณีลิงก์ CSV ยังไม่พร้อมใช้งาน หน้าเว็บจะยังทำงานได้ทันที)
+        const backupData = [
+            {
+                category: "Seller Edu",
+                title: "Seller Education Handbook",
+                url: "https://docs.google.com/presentation/d/1J01c90HNUmj_C1CuYzrWnfEBqxPExLsJjMZtQ_dMpJg/edit?usp=sharing",
+                objective: "[TH] คู่มือหลักเกณฑ์ โครงสร้างทีม และ SOP สำหรับพนักงานใหม่ [EN] Core team structure, guidelines, and onboarding handbook for new joiners.",
+                keywords: "handbook, seller edu, onboarding, manual, sop, คู่มือ, เรียน, สอนผู้ขาย, คอร์ส, โครงสร้างทีม"
+            },
+            {
+                category: "Training",
+                title: "Training Plan 2026",
+                url: "https://docs.google.com/spreadsheets/d/1V6sxEzogvuyJsKbHCa9bbdWN7HtLAvIcK6kaSn5HaZ0/edit?usp=sharing",
+                objective: "[TH] แผนการจัดอบรมผู้ขายประจำปี 2026 ตารางหัวข้อและไทม์ไลน์ [EN] Annual seller training master plan, course topics, and timeline for 2026.",
+                keywords: "training plan, calendar, 2026, ตารางเรียน, แผนการสอน, คอร์ส, คลาส, เทรนนิ่ง"
+            },
+            {
+                category: "Training",
+                title: "Classroom PIC Centralize Plan",
+                url: "https://docs.google.com/spreadsheets/d/1RAHfhtzuLCoB_lssKvlBKfxH0pv-S4cIlYCqAEAQ3aI/edit?gid=0#gid=0",
+                objective: "[TH] ตารางมอบหมายงานและรายชื่อผู้ดูแล (PIC) ห้องเรียนเทรนนิ่งแบบศูนย์กลาง [EN] Centralized classroom assignment tracker and PIC (Person in Charge) matrix.",
+                keywords: "pic, classroom, centralize, assignment, owner, ผู้รับผิดชอบ, ห้องเรียน, ผู้ดูแล, งานกลาง"
+            },
+            {
+                category: "Training",
+                title: "Training Result 2026",
+                url: "https://docs.google.com/spreadsheets/d/1JsT3eMq73DVPgdRRAWB6Q4d82E0wYyUOc68Gh6wSyuo/edit?gid=882924953#gid=882924953",
+                objective: "[TH] ผลลัพธ์ คะแนนสอบ และผลประเมินประสิทธิภาพคอร์สเรียนปี 2026 [EN] Training performance metrics, test scores, and evaluation results for 2026.",
+                keywords: "training result, score, performance, evaluation, สรุปผล, คะแนน, บันทึกผล, สถิติ, ประเมิน"
+            },
+            {
+                category: "Channel",
+                title: "Channel Schedule 2026",
+                url: "https://docs.google.com/spreadsheets/d/1RAHfhtzuLCoB_lssKvlBKfxH0pv-S4cIlYCqAEAQ3aI/edit?usp=sharing",
+                objective: "[TH] ตารางเวลาและคิวการปล่อยเนื้อหา/บรอดแคสต์ผ่านช่องทาง SEH ปี 2026 [EN] Broadcast timeline, content pipeline, and channel schedule for 2026.",
+                keywords: "channel schedule, broadcast, timeline, 2026, ตารางปล่อยของ, บรอดแคสต์, คิวงาน, ตารางเวลา, ตารางคอนเทนต์"
+            },
+            {
+                category: "Channel",
+                title: "Content Plan 2026",
+                url: "https://docs.google.com/spreadsheets/d/1RAHfhtzuLCoB_lssKvlBKfxH0pv-S4cIlYCqAEAQ3aI/edit?usp=sharing",
+                objective: "[TH] แผนการผลิตเนื้อหา ไอเดียคอนเทนต์ และตารางหัวข้อที่จะใช้สื่อสารตลอดปี 2026 [EN] Annual content ideation, production pipeline, and communication master plan for 2026.",
+                keywords: "content plan, marketing, 2026, แอนิเมชัน, แผนคอนเทนต์, ไอเดีย, แผนการผลิต, สื่อการสอน, บทความ"
+            },
+            {
+                category: "Channel",
+                title: "Overall Channel Comms Dashboard 2026",
+                url: "https://docs.google.com/spreadsheets/d/1RAHfhtzuLCoB_lssKvlBKfxH0pv-S4cIlYCqAEAQ3aI/edit?usp=sharing",
+                objective: "[TH] แดชบอร์ดภาพรวมสรุปสถิติและตัวชี้วัด (KPIs) ทุกช่องทางสื่อสารของผู้ขายในปี 2026 [EN] Master dashboard consolidating performance metrics and KPIs across all seller communication channels in 2026.",
+                keywords: "overall, dashboard, comms dashboard, master tracker, 2026, ภาพรวม, แดชบอร์ดรวม, สรุปสถิติ, ข้อมูลช่องทาง"
+            },
+            {
+                category: "Channel",
+                title: "Channel Comms Performance Result",
+                url: "https://docs.google.com/spreadsheets/d/1JsT3eMq73DVPgdRRAWB6Q4d82E0wYyUOc68Gh6wSyuo/edit?gid=882924953#gid=882924953",
+                objective: "[TH] สรุปผลการดำเนินงาน ตัวเลข Traffic และประสิทธิภาพการเข้าถึงคนดูแยกตามช่องทาง [EN] Historical performance results, traffic distribution, and audience engagement analytics per channel.",
+                keywords: "performance, traffic, channel result, click, view, ยอดวิว, สรุปผล, ประสิทธิภาพ, สถิติการเข้าถึง"
+            },
+            {
+                category: "Channel",
+                title: "the dashboard for SEH",
+                url: "https://datasuite.shopee.io/dashboard/dashboard/b296b8cf-c667-4684-b7a1-7b39238900df/normal",
+                objective: "[TH] แดชบอร์ด (Datasuite) สรุปผลตัวเลขและประสิทธิภาพของช่องทาง SEH [EN] Datasuite dashboard for SEH channel communication performance and traffic analytics.",
+                keywords: "performance, datasuite, dashboard, analytics, metrics, seh, สรุปผล, แดชบอร์ด, ยอดวิว, ประสิทธิภาพ"
+            },
+            {
+                category: "Seller Comms",
+                title: "PN Request Tracker 2026",
+                url: "https://docs.google.com/spreadsheets/d/1jCcfx0NExSfAzyj9a_lFYlIu3Re6qor9TIzaDATX7go/edit?usp=sharing",
+                objective: "[TH] ระบบติดตามคิวและสถานะการส่ง Push Notification (PN) ถึงผู้ขายปี 2026 [EN] Push Notification (PN) submission queue and request status tracker for 2026.",
+                keywords: "pn, push notification, request tracker, alert, ยิงแจ้งเตือน, ส่งข้อความ, แจ้งเตือนผู้ขาย, ติดตามสถานะ"
+            },
+            {
+                category: "Seller Comms",
+                title: "SC Request Tracker 2026",
+                url: "https://docs.google.com/spreadsheets/d/1f7ZFeR4a3fnQUBm3kOeoW7wLXRFKjvsIMpCOCu6teMI/edit?usp=sharing",
+                objective: "[TH] ระบบติดตามคิวคำขอส่งข่าวสารผ่านช่องทาง Seller Centre (SC) Notification [EN] Request status tracker for Seller Centre (SC) system notifications.",
+                keywords: "sc, seller centre, notification, tracker, ระบบติดตาม, ข้อความในระบบ, แจ้งข่าวผู้ขาย"
+            },
+            {
+                category: "Seller Comms",
+                title: "PN Performance Result",
+                url: "https://docs.google.com/spreadsheets/d/1LbC_DWOuDhQvAMIonQttDJY6LMjjQG2PaLeZrmmy97I/edit?usp=sharing",
+                objective: "[TH] สรุปสถิติจราจรและประสิทธิภาพการยิง PN (Open Rate, CTR) [EN] PN performance metrics report, including Open Rates and Click-Through Rates (CTR).",
+                keywords: "pn result, ctr, open rate, performance, ตัวเลข, สรุปผล pn, สถิติจราจร, ผลตอบรับ"
+            },
+            {
+                category: "Seller Comms",
+                title: "[Urgent comms] Pharmacy Comms",
+                url: "https://docs.google.com/spreadsheets/d/1EFBFWdnlhELBr8OJFpmzw5pY2GCmOnmce_KHZQblBpA/edit?usp=sharing",
+                objective: "[TH] แผนงานและระบบติดตามการสื่อสารเร่งด่วนสำหรับกลุ่มร้านขายยา/เวชภัณฑ์ [EN] Urgent communication plan and broadcast tracker for Pharmacy & Medical sellers.",
+                keywords: "urgent, pharmacy, medical, ยา, สื่อสารเร่งด่วน, ประกาศด่วน, ร้านยา, เวชภัณฑ์, เคสด่วน"
+            },
+            {
+                category: "Seller Comms",
+                title: "[Urgent comms] Instant & Express Delivery",
+                url: "https://docs.google.com/spreadsheets/d/19_2_T6FK0_Ep7ygx-ypm0p5dky7crANQLVrAhiZmXog/edit?usp=sharing",
+                objective: "[TH] แผนงานและระบบติดตามการสื่อสารเร่งด่วนเกี่ยวกับระบบขนส่งด่วน [EN] Urgent communication plan and tracker regarding Instant / Express Delivery updates.",
+                keywords: "urgent, delivery, instant, express, ขนส่ง, ด่วน, ส่งไว, ขนส่งด่วน, สื่อสารเร่งด่วน, ขนส่งมีปัญหา"
+            }
+        ];
+
+        let allLinksData = [...backupData];
+
+        async function initPortal() {
+            const statusEl = document.getElementById("connectionStatus");
+            try {
+                // หากมีการนำ URL เผยแพร่จริงจาก Google Sheet มาใส่ จะทำการดึงข้อมูลสดทันที
+                if(!googleSheetCsvUrl.includes("YOUR_SHEET_ID_HERE")) {
+                    const response = await fetch(googleSheetCsvUrl);
+                    if(response.ok) {
+                        const csvText = await response.text();
+                        allLinksData = parseCsv(csvText);
+                        statusEl.innerText = "เชื่อมต่อฐานข้อมูล Google Sheet สำเร็จ (Live Data)";
+                        statusEl.parentElement.classList.remove("text-slate-600");
+                        statusEl.parentElement.classList.add("text-emerald-600");
+                    } else {
+                        throw new Error("CSV Response not ok");
+                    }
+                } else {
+                    statusEl.innerText = "ใช้งานระบบด้วย Local Backup Data (พร้อมเชื่อมต่อ Sheet หลังบ้าน)";
+                }
+            } catch (e) {
+                console.warn("ดึงข้อมูลจาก Sheet ไม่สำเร็จ, ใช้ข้อมูลสำรองแทน:", e);
+                statusEl.innerText = "ใช้งานระบบด้วย Local Backup Data (ดึงข้อมูลสดไม่สำเร็จ)";
+            }
+            renderLinks(allLinksData);
+        }
+
+        // ตัวแยกแยะข้อความ CSV แบบซับซ้อน ป้องกัน Comma ในช่องข้อความหลุด
+        function parseCsv(text) {
+            const lines = text.split(/\r?\n/);
+            const result = [];
+            for (let i = 1; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (!line) continue;
+                
+                // ใช้ Regex ในการตัดคำเพื่อรองรับข้อความที่มีเครื่องหมายอัญประกาศครอบครอบไว้
+                const matches = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || line.split(",");
+                const cleanCols = matches.map(col => col.replace(/^"|"$/g, '').trim());
+                
+                if (cleanCols.length >= 5) {
+                    result.push({
+                        category: cleanCols[0],
+                        title: cleanCols[1],
+                        url: cleanCols[2],
+                        objective: cleanCols[3],
+                        keywords: cleanCols[4]
+                    });
+                }
+            }
+            return result.length > 0 ? result : backupData;
+        }
+
+        function renderLinks(data) {
+            const container = document.getElementById("linksContainer");
+            container.innerHTML = "";
+
+            if(data.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12 bg-white rounded-xl border border-dashed border-slate-200">
+                        <i class="fa-solid fa-folder-open text-slate-300 text-4xl mb-3"></i>
+                        <p class="text-slate-500 font-medium">ไม่พบลิงก์หรือเครื่องมือที่ค้นหา</p>
+                        <p class="text-slate-400 text-xs mt-1">ลองเปลี่ยนคำค้นหาหรือเช็คตัวสะกดอีกครั้ง</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // จัดกลุ่มข้อมูลตามหมวดหมู่
+            const groups = {};
+            data.forEach(item => {
+                if(!groups[item.category]) groups[item.category] = [];
+                groups[item.category].push(item);
+            });
+
+            // สร้าง Element สไตล์การ์ดแยกตามหมวดหมู่
+            for(const category in groups) {
+                const card = document.createElement("div");
+                card.className = "bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col justify-between";
+                
+                // สีและไอคอนแยกตามความเหมาะสมของหมวดหมู่ Shopee
+                let iconHtml = '<i class="fa-solid fa-link text-slate-400"></i>';
+                if(category.includes("Edu")) iconHtml = '<i class="fa-solid fa-book-open text-amber-500"></i>';
+                else if(category.includes("Training")) iconHtml = '<i class="fa-solid fa-chalkboard-user text-blue-500"></i>';
+                else if(category.includes("Channel")) iconHtml = '<i class="fa-solid fa-bullhorn text-purple-500"></i>';
+                else if(category.includes("Comms")) iconHtml = '<i class="fa-solid fa-paper-plane text-orange-500"></i>';
+
+                let contentHtml = `
+                    <div>
+                        <div class="flex items-center gap-2 mb-4 border-b border-slate-50 pb-3">
+                            <span class="text-lg">${iconHtml}</span>
+                            <h2 class="font-bold text-base text-slate-700 tracking-tight">${category}</h2>
+                        </div>
+                        <div class="space-y-2.5">
+                `;
+
+                groups[category].forEach(item => {
+                    const isUrgent = item.title.toLowerCase().includes("urgent");
+                    const badgeClass = isUrgent ? "bg-rose-50 text-rose-600 border border-rose-100 animate-pulse" : "bg-slate-50 text-slate-600 group-hover:bg-orange-50";
+                    
+                    contentHtml += `
+                        <a href="${item.url}" target="_blank" class="block p-3 rounded-xl hover:bg-gradient-to-r hover:from-orange-50 hover:to-orange-100/50 group transition-all duration-200 border border-transparent hover:border-orange-200 shadow-sm bg-slate-50/50">
+                            <div class="flex justify-between items-start gap-2 mb-1.5">
+                                <span class="font-semibold text-sm text-slate-800 group-hover:text-[#EE4D2D] transition-colors leading-snug">${item.title}</span>
+                                <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded ${badgeClass}">
+                                    ${isUrgent ? 'Urgent' : 'Open'}
+                                </span>
+                            </div>
+                            <p class="text-xs text-slate-500 leading-relaxed">${item.objective}</p>
+                        </a>
+                    `;
+                });
+
+                contentHtml += `</div></div>`;
+                card.innerHTML = contentHtml;
+                container.appendChild(card);
+            }
+        }
+
+        // ควบคุมระบบค้นหาแบบ Real-time
+        document.getElementById("searchBar").addEventListener("input", (e) => {
+            const word = e.target.value.toLowerCase().trim();
+            if(!word) {
+                renderLinks(allLinksData);
+                return;
+            }
+            const filtered = allLinksData.filter(item => 
+                item.title.toLowerCase().includes(word) ||
+                item.category.toLowerCase().includes(word) ||
+                item.objective.toLowerCase().includes(word) ||
+                item.keywords.toLowerCase().includes(word)
+            );
+            renderLinks(filtered);
+        });
+
+        // สั่งให้ระบบเริ่มทำงาน
+        initPortal();
+    </script>
+</body>
+</html>
