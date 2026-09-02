@@ -1,0 +1,8 @@
+node_modules/
+.tools/
+.firebase/
+.firebaserc
+public/runtime-config.js
+private-config.local.json
+*.log
+.DS_Store
