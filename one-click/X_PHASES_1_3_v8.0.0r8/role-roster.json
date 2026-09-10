@@ -1,0 +1,19 @@
+{
+  "authEpoch": "X-R8-20260910-01",
+  "roleSource": "Seller Edu OS",
+  "users": [
+    {"employeeId":"","nickname":"Punn","fullname":"","thaiName":"","email":"punn.phoolsuk@shopee.com","businessRole":"","sellerEduOS":"Manager"},
+    {"employeeId":"THSP2945","nickname":"Totoh","fullname":"Sartra Taponchai","thaiName":"ศาสตรา ทะโพนชัย","email":"totoh.taponchai@shopee.com","businessRole":"Seller Education & Engagement Lead","sellerEduOS":"Manager"},
+    {"employeeId":"EX_THSP003709","nickname":"Bankpond","fullname":"Passanon Cheewathaworn","thaiName":"พรรษนนท์ ชีวะถาวร","email":"bank.cheewath@shopeemobile-external.com","businessRole":"Seller Education Support","sellerEduOS":"Team Lead"},
+    {"employeeId":"ECSPE30213","nickname":"Aun","fullname":"Suradit Inthraravong","thaiName":"สุรดิษ อินทรวงศ์","email":"aun.intharavong@shopee.com","businessRole":"Seller Trainer Lead","sellerEduOS":"Member"},
+    {"employeeId":"THSP9436","nickname":"Opor","fullname":"Nawadee Anukhrohkul","thaiName":"นวดี อนุเคราะห์กุล","email":"opor.anukhroh@shopee.com","businessRole":"Seller Trainer","sellerEduOS":"Member"},
+    {"employeeId":"THSP5611","nickname":"Hagrid","fullname":"Nutdanai Pornprasert","thaiName":"ณัฐดนัย พรประเสริฐ","email":"hagrid.pornpras@shopee.com","businessRole":"Seller Trainer","sellerEduOS":"Member"},
+    {"employeeId":"THSP9613","nickname":"Tongta","fullname":"Suthita Thaisathuean","thaiName":"สุธิตา ไทยสะเทือน","email":"tongta.thaisath@shopee.com","businessRole":"Seller Trainer","sellerEduOS":"Member"},
+    {"employeeId":"THSP10479","nickname":"Earth","fullname":"Chatcharat Chamnanphon","thaiName":"ชัชรัตน์ ชำนาญพล","email":"earth.chamnanphon@shopee.com","businessRole":"Seller Trainer","sellerEduOS":"Member"},
+    {"employeeId":"THSP6186","nickname":"First","fullname":"Itthichai Thammakit","thaiName":"อิทธิชัย ธรรมกิจ","email":"first.thammaki@shopee.com","businessRole":"Channel Communication Lead","sellerEduOS":"Team Lead"},
+    {"employeeId":"THSP4459","nickname":"Bonus","fullname":"Bonus Sanwong","thaiName":"โบนัส แสนวงษ์","email":"bonus.sanwong@shopee.com","businessRole":"Channel Communication","sellerEduOS":"Member"},
+    {"employeeId":"THSP8082","nickname":"Dear","fullname":"Vanussanan Kulnaratorn","thaiName":"วนัสนันท์ กุลนราธร","email":"dear.kulnaratorn@shopee.com","businessRole":"Channel Communication","sellerEduOS":"Member"},
+    {"employeeId":"THSP5086","nickname":"Mook","fullname":"Sruangsanan Siriprapapol","thaiName":"สรวงศนันท์ สิริประภาพล","email":"mook.siriprap@shopee.com","businessRole":"Channel Communication","sellerEduOS":"Member"},
+    {"employeeId":"THSP10703","nickname":"Tao","fullname":"Ananda Sitikham","thaiName":"อนันดา สิทธิขำ","email":"tao.sitikham@shopee.com","businessRole":"Channel Communication","sellerEduOS":"Member"}
+  ]
+}
