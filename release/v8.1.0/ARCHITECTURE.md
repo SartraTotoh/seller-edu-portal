@@ -17,7 +17,7 @@ Google identity provider
 verified email
         |
         v
-Seller Edu OS role resolver
+server-side Seller Edu OS role resolver
         |
         +--> Member interface
         +--> Team Lead interface
@@ -41,13 +41,14 @@ After portal entry only:
 - Produces an identity result only.
 
 ### Role layer
-- Uses the approved Seller Edu OS roster as the interface authority.
+- Uses an approved server-side Seller Edu OS role source.
+- No employee roster or privileged role dataset is published in static Hosting or a public repository.
 - Business title is metadata and never overrides Seller Edu OS role.
 - Exact supported interface roles: Member, Team Lead, Manager.
 
 ### Interface layer
 - Member sees own-scope work.
-- Team Lead sees own scope plus permitted team scope.
+- Team Lead sees permitted team scope.
 - Manager sees management scope and can switch perspective to Member / Team Lead / Manager without changing the real signed-in identity.
 
 ### X layer
@@ -70,9 +71,9 @@ After portal entry only:
 - Until an approved API/secret exists, its state is API_PENDING / unavailable without blocking Portal use.
 
 ## Session model
-- Session stores identity reference, authoritative role, allowed perspectives, selected perspective, and auth epoch.
+- Session stores identity reference, authoritative role, allowed perspectives, selected perspective, issued-at, expiry and auth epoch.
 - Bumping auth epoch invalidates previous Portal sessions without deleting business data or Connector registrations.
-- Re-login does not delete TASK_MASTER, ACTIVITY_LOG, hours, content, visitor, or Connector records.
+- Re-login does not delete task, activity, hours, content, visitor, or Connector records.
 
 ## Failure policy
 
@@ -81,7 +82,7 @@ After portal entry only:
 | Connector unavailable | PASS | Workspace work-signal sync degraded |
 | Gateway X endpoint unavailable | PASS | X shows unavailable health state |
 | SeaTalk unavailable | PASS | SeaTalk integration unavailable |
-| Role not in approved roster | DENY | Entire protected Portal |
+| Role not in approved role source | DENY | Entire protected Portal |
 | Invalid identity | DENY | Entire protected Portal |
 | Non-manager requests X | PASS Portal / DENY X | X only |
 
