@@ -5,9 +5,9 @@ Release policy: PASS = every required check passes. Any single FAIL blocks relea
 ## Architecture invariants
 1. Portal login is independent from Workspace Connector registration.
 2. One identity flow only. No iframe/popup fallback chain that can accidentally enter legacy Connector routes.
-3. Role is resolved from the approved Seller Edu OS roster; users cannot self-select or escalate role.
+3. Role is resolved from an approved server-side Seller Edu OS role source; users cannot self-select or escalate role.
 4. Member receives member scope only.
-5. Team Lead receives own-team scope only.
+5. Team Lead receives permitted team scope only.
 6. Manager receives manager scope and may switch UI perspective to Member/Team Lead/Manager without changing real identity.
 7. X is server-gated Manager-only. Hiding UI is not authorization.
 8. X Scenario is read-only and cannot mutate task ownership.
@@ -15,6 +15,7 @@ Release policy: PASS = every required check passes. Any single FAIL blocks relea
 10. Existing business data is never reset by authentication/session changes.
 11. Existing Connector and Gateway Script/Deployment IDs must not be replaced silently.
 12. SeaTalk remains isolated from login and stays API_PENDING until an approved inbound API/secret exists.
+13. No employee roster, privileged role list, token, secret or password is committed to public Hosting/GitHub.
 
 ## Login gate
 - Approved internal Manager login -> PASS.
@@ -31,7 +32,7 @@ Release policy: PASS = every required check passes. Any single FAIL blocks relea
 
 ## Interface gate
 - Member: only member-allowed modules/data.
-- Team Lead: own team summary + member functions.
+- Team Lead: permitted team summary + member functions.
 - Manager: all-team summary + X + perspective switcher.
 - Perspective switch never changes authenticated identity.
 - X nav absent for non-manager DOM/data response.
@@ -66,7 +67,7 @@ Release policy: PASS = every required check passes. Any single FAIL blocks relea
 ## Frontend/security gate
 - No authentication dependency on CSP-blocked iframe.
 - No inline script/style requirement that violates production CSP.
-- No secrets/tokens/passwords committed to public Hosting/GitHub.
+- No secrets/tokens/passwords/employee roster committed to public Hosting/GitHub.
 - Role and X data are not embedded as privileged data in public static assets.
 - Direct route refresh works.
 - Notebook responsive navigation fits all allowed modules.
@@ -74,8 +75,7 @@ Release policy: PASS = every required check passes. Any single FAIL blocks relea
 - DD-MM-YYYY display rule passes.
 
 ## Deployment gate
-- Exact Firebase project: seller-edu-os-260902-vjzn6.
-- Exact Hosting site: selleredu-portal.
+- Exact Firebase project and Hosting site verified before deploy.
 - Pre-deploy backup created.
 - Static syntax checks pass.
 - Apps Script source conflict check passes (.js/.gs basename collision = BLOCK).
