@@ -10,7 +10,7 @@ echo Scope : Firebase Hosting only
 echo ============================================================
 echo.
 
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0RESTORE_SELLEREDU_V721.ps1"
+powershell.exe -NoProfile -File "%~dp0RESTORE_SELLEREDU_V721.ps1"
 set "RC=%ERRORLEVEL%"
 
 echo.
